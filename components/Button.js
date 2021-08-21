@@ -2,19 +2,16 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { colors, size } from '../constant';
 import { ThemeText } from '.';
-export default function Button({ onPress, title = '', secondary = false, style = {} }) {
-	if (secondary)
-		return (
-			<TouchableOpacity style={[ styles.base, { ...style } ]} onPress={onPress}>
-				<ThemeText style={{ color: colors.primaryColor }} text={title} />
-			</TouchableOpacity>
-		);
-	else
-		return (
-			<TouchableOpacity style={[ styles.base, styles.primaryButton, { ...style } ]} onPress={onPress}>
-				<ThemeText style={{ color: colors.negativeText }} text={title} />
-			</TouchableOpacity>
-		);
+import { Button as ElementButton } from 'react-native-elements';
+export default function Button({ onPress, title = '', type = 'solid', style = {} }) {
+	return (
+		<ElementButton
+			title={title}
+			type={type}
+			onPress={onPress}
+			buttonStyle={[ styles.base, styles[type], { ...style } ]}
+		/>
+	);
 }
 
 const styles = StyleSheet.create({
@@ -25,9 +22,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		borderRadius: size.mediumRadius,
 		borderWidth: 1,
-		borderColor: colors.primaryColor
+		borderColor: colors.primaryColor,
+		backgroundColor: 'transparent'
 	},
-	primaryButton: {
+	solid: {
 		backgroundColor: colors.primaryColor
 	}
 });
